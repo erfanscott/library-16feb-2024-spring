@@ -7,7 +7,7 @@ import me.erfan.libraryrest.entity.Book;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Member;
 import me.erfan.libraryrest.entity.enums.BookAvailability;
 import me.erfan.libraryrest.entity.enums.Gender;
-import me.erfan.libraryrest.entity.libraryUser.role.Role;
+
 import me.erfan.libraryrest.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

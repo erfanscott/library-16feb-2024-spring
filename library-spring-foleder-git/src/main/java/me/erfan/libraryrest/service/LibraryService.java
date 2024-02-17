@@ -1,5 +1,7 @@
 package me.erfan.libraryrest.service;
 
+import me.erfan.libraryrest.controlleradvice.UpdateUserFailedException;
+import me.erfan.libraryrest.dto.LibraryUserDTO;
 import me.erfan.libraryrest.entity.Book;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Librarian;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Member;
@@ -16,7 +18,7 @@ public interface LibraryService {
     Librarian registerLibrarian(Librarian librarian);
     LibraryUser saveLibraryUser(LibraryUser libraryUser);
     List<LibraryUser> findLibraryUserByEmail(String email);
-
+    void updateLibraryUserProfile(Long id, LibraryUserDTO updatedFields,Class<?> clazz) throws UpdateUserFailedException;
 
     /**
      * MemberService

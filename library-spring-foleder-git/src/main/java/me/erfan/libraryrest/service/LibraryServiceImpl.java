@@ -1,5 +1,7 @@
 package me.erfan.libraryrest.service;
 
+import me.erfan.libraryrest.controlleradvice.UpdateUserFailedException;
+import me.erfan.libraryrest.dto.LibraryUserDTO;
 import me.erfan.libraryrest.entity.Book;
 import me.erfan.libraryrest.entity.libraryUser.Authority;
 import me.erfan.libraryrest.entity.libraryUser.Authority;
@@ -62,6 +64,45 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
+    public void updateLibraryUserProfile(Long id, LibraryUserDTO updatedFields,Class<?> clazz) throws UpdateUserFailedException {
+        System.out.println(id+"////i was in library service");
+        if(clazz.equals(Member.class)){
+            Optional<Member> result = memberRepository.findById(id);
+            if(result.isPresent()) {
+                Member user = result.get();
+
+                if(updatedFields.getFirstName()!= null)
+                    user.setFirstName(updatedFields.getFirstName());
+                if(updatedFields.getLastName()!= null)
+                    user.setLastName(updatedFields.getLastName());
+                if(updatedFields.getEmail()!= null)
+                    user.setEmail(updatedFields.getEmail());
+                saveLibraryUser(user, Member.class);
+            }else
+                throw new UpdateUserFailedException();
+        }else if(clazz.equals(Librarian.class)){
+
+                Optional<Librarian> result = librarianRepository.findById(id);
+                if(result.isPresent()) {
+                    Librarian user = result.get();
+
+                    if(updatedFields.getFirstName()!= null)
+                        user.setFirstName(updatedFields.getFirstName());
+                    if(updatedFields.getLastName()!= null)
+                        user.setLastName(updatedFields.getLastName());
+                    if(updatedFields.getEmail()!= null)
+                        user.setEmail(updatedFields.getEmail());
+                    saveLibraryUser(user, Librarian.class);
+                }else
+                    throw new UpdateUserFailedException();
+        }else{
+            throw new UpdateUserFailedException();
+        }
+
+
+    }
+
+    @Override
     public Member registerMember(Member member) {
         member.setPwd(passwordEncoder.encode(member.getPwd()));
         member.setAuthorities(Collections.singleton(new Authority("ROLE_MEMBER",member)));
@@ -88,7 +129,7 @@ public class LibraryServiceImpl implements LibraryService {
         /**
          * This should be revised
          * */
-        throw null;
+        throw new RuntimeException();
     }
     @Override
     public List<Book> getBorrowedBooks(Long memberId) {
@@ -131,7 +172,7 @@ public class LibraryServiceImpl implements LibraryService {
         /**
          * This should be revised
          * */
-        throw null;
+        throw new RuntimeException();
     }
 
 

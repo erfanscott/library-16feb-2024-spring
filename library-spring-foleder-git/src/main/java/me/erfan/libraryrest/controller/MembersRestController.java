@@ -1,8 +1,13 @@
 package me.erfan.libraryrest.controller;
 
+import me.erfan.libraryrest.dto.LibraryUserDTO;
 import me.erfan.libraryrest.entity.Book;
+import me.erfan.libraryrest.entity.libraryUser.LibraryUser;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Member;
 import me.erfan.libraryrest.service.LibraryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,6 +51,13 @@ public class MembersRestController {
     @PostMapping("/{memberId}/return/{bookId}")
     public void returnBook(@PathVariable String memberId,@PathVariable String bookId){
         libraryService.returnBook(Long.valueOf(memberId),Long.valueOf(bookId));
+    }
+
+    @PutMapping("/{memberId}")
+    public ResponseEntity<String> updateMember(@RequestBody LibraryUserDTO updatedFields,@PathVariable String memberId){
+        System.out.println(memberId+"////i was in put mapping");
+            libraryService.updateLibraryUserProfile(Long.valueOf(memberId),updatedFields, Member.class);
+            return new ResponseEntity<>("the user has been successfullyy updated",HttpStatus.OK);
     }
 
 }

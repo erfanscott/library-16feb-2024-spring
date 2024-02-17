@@ -26,7 +26,7 @@ import java.util.Set;
 public class LibraryUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "email",unique = true)

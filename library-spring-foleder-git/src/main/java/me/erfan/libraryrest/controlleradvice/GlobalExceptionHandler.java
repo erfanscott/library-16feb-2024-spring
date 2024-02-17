@@ -6,16 +6,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.net.http.HttpResponse;
-import java.sql.SQLIntegrityConstraintViolationException;
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(RegisterationFailedException.class)
-    public ResponseEntity<AuthErrorResponse> duplicateEmailHandler(RegisterationFailedException exception){
-        AuthErrorResponse responseBody = new AuthErrorResponse(exception.getMessage(),(short) 1);
-        ResponseEntity<AuthErrorResponse> response = new ResponseEntity<>(responseBody,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponseBody> duplicateEmailHandler(RegisterationFailedException exception){
+        ErrorResponseBody responseBody = new ErrorResponseBody(exception.getMessage(),(short) 1);
+        ResponseEntity<ErrorResponseBody> response = new ResponseEntity<>(responseBody,HttpStatus.BAD_REQUEST);
         return response;
+    }
+    @ExceptionHandler(UpdateUserFailedException.class)
+    public ResponseEntity<ErrorResponseBody> updateUserFailedHandler(UpdateUserFailedException exception){
+        return new ResponseEntity<ErrorResponseBody>(ErrorResponseBody.builder()
+                .message("the user was not found").errorCode(HttpStatus.NOT_FOUND.value()).build(),HttpStatus.NOT_FOUND);
     }
 
 }
