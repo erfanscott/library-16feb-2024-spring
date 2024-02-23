@@ -55,13 +55,16 @@ public class BookRestController {
 
 
 
-    @GetMapping
-    public List<Book> findBooks(@RequestParam String key){
+    @RequestMapping(value = "/page/{page}",method = RequestMethod.GET)
+//    @RequestParam String key
+    public List<Book> findBooks(@PathVariable String page){
+        String key = "";
+        System.out.println("FFFFFFFFFFFIIIIIIIIIIIIIIIIIIINNNNNNNNNNDDDDDDDDD ");
         List<Book> results = new ArrayList<>();
+        int pageNumber = Integer.valueOf(page);
 
-        if(key=="")
-            return results;
-
+        if(key.equals(""))
+            results = libraryService.fetchAllBooks(pageNumber);
 
         Long keyAsId;
         try {
@@ -83,7 +86,7 @@ public class BookRestController {
 
 
 
-       results = bookRepository.findAll(spec);
+       results = libraryService.findSpecificBooks(spec,pageNumber);
 
         return results;
     }

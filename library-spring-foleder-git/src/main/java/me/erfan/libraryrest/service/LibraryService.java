@@ -6,6 +6,7 @@ import me.erfan.libraryrest.entity.Book;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Librarian;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Member;
 import me.erfan.libraryrest.entity.libraryUser.LibraryUser;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
@@ -33,6 +34,8 @@ public interface LibraryService {
      */
     Book saveBook(Book book);
     Book fetchBookById(Long id);
+    List<Book> fetchAllBooks(int page);
+    List<Book> findSpecificBooks(Specification<Book> spec, int pageNumber);
 
 
 

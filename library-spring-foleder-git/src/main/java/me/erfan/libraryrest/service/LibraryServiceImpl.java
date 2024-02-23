@@ -13,6 +13,10 @@ import me.erfan.libraryrest.repository.BookRepository;
 import me.erfan.libraryrest.repository.LibrarianRepository;
 import me.erfan.libraryrest.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -173,6 +177,19 @@ public class LibraryServiceImpl implements LibraryService {
          * This should be revised
          * */
         throw new RuntimeException();
+    }
+
+    @Override
+    public List<Book> fetchAllBooks(int page) {
+        Pageable pageable = PageRequest.of(page,10);
+        Page<Book> results =  bookRepository.findAll(pageable);
+        return results.stream().toList();
+    }
+
+    @Override
+    public List<Book> findSpecificBooks(Specification<Book> spec, int pageNumber) {
+        Page<Book> results = bookRepository.findAll(spec,PageRequest.of(pageNumber,10));
+        return results.stream().toList();
     }
 
 
