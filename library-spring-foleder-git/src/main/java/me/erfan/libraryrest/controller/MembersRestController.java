@@ -2,6 +2,7 @@ package me.erfan.libraryrest.controller;
 
 import me.erfan.libraryrest.dto.LibraryUserDTO;
 import me.erfan.libraryrest.entity.Book;
+import me.erfan.libraryrest.entity.libraryUser.Authority;
 import me.erfan.libraryrest.entity.libraryUser.LibraryUser;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Member;
 import me.erfan.libraryrest.service.LibraryService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -32,10 +34,14 @@ public class MembersRestController {
         return requestedMember;
     }
 
+    /**
+     *This has to be worked onnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+     *
+     */
     @PostMapping("/")
     public Member addMember(@RequestBody Member member){
         member.setId(null);
-        Member savedMember = libraryService.saveLibraryUser(member,Member.class);
+        Member savedMember = libraryService.registerMember(member);
         return savedMember;
     }
 

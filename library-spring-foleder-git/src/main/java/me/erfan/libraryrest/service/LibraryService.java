@@ -31,7 +31,7 @@ public interface LibraryService {
     /**
      *BookService
      */
-    void saveBook(Book book);
+    Book saveBook(Book book);
     Book fetchBookById(Long id);
 
 

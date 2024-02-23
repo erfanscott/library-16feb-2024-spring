@@ -1,6 +1,8 @@
 package me.erfan.libraryrest.controller;
 
+import jakarta.servlet.http.HttpSession;
 import me.erfan.libraryrest.controlleradvice.RegisterationFailedException;
+import me.erfan.libraryrest.controlleradvice.SessionCredentialsNotValidException;
 import me.erfan.libraryrest.entity.libraryUser.LibraryUser;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Librarian;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Member;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +21,12 @@ import java.util.List;
 public class LibraryAuthController {
 
     private LibraryService libraryService;
+    private SessionRegistry sessionRegistry;
 
     @Autowired
-    public LibraryAuthController(LibraryService libraryService) {
+    public LibraryAuthController(LibraryService libraryService,SessionRegistry sessionRegistry) {
         this.libraryService = libraryService;
+        this.sessionRegistry = sessionRegistry;
     }
 
 
@@ -35,7 +40,7 @@ public class LibraryAuthController {
         if(user.size()>0)
             return user.get(0);
             else
-                throw new RuntimeException();
+                throw new SessionCredentialsNotValidException();
     }
     @PostMapping("/member/register")
     public ResponseEntity<Member> registerUser(@RequestBody Member member){

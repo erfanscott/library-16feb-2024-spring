@@ -19,5 +19,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<ErrorResponseBody>(ErrorResponseBody.builder()
                 .message("the user was not found").errorCode(HttpStatus.NOT_FOUND.value()).build(),HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(SessionCredentialsNotValidException.class)
+    public ResponseEntity<ErrorResponseBody> sessionCredentialsNotValidHandler(SessionCredentialsNotValidException exception){
+        return new ResponseEntity<ErrorResponseBody>(ErrorResponseBody.builder()
+                .message("the credentials associated with this session id are not valid anymore")
+                .errorCode(HttpStatus.UNAUTHORIZED.value()).build(),HttpStatus.UNAUTHORIZED);    }
 
 }

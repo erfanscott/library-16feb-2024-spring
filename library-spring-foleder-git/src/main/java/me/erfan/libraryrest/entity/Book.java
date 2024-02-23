@@ -30,7 +30,7 @@ public class Book {
     private BookAvailability availability = BookAvailability.AVAILABLE;
 
    // @Temporal(TemporalType.DATE)
-    private LocalDate borrowingDate = LocalDate.now();
+    private LocalDate borrowingDate;
 
     @JsonIgnoreProperties("borrowedBooks")
     @ManyToOne

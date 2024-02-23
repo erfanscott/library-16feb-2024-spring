@@ -27,18 +27,18 @@ public class LibraryRestController {
 
     @PostConstruct
     public void loadDb(){
-     /*   Book b3 = Book.builder().name("Poor Folk").authorName("Fyodor Mikhailovich Dostoevsky").availability(BookAvailability.AVAILABLE).build();
-        Book b2 = Book.builder().name("Notes from Underground").authorName("Fyodor Mikhailovich Dostoevsky").availability(BookAvailability.AVAILABLE).build();
-        Book b4 = Book.builder().name("The Idiot").authorName("Fyodor Mikhailovich Dostoevsky").availability(BookAvailability.AVAILABLE).build();
-        Book b5 = Book.builder().name("Crime and Punishment").authorName("Fyodor Mikhailovich Dostoevsky").availability(BookAvailability.AVAILABLE).build();
-        Book b6 = Book.builder().name("War and Peace").authorName("Leo Tolstoy").availability(BookAvailability.AVAILABLE).build();
-        Book b7 = Book.builder().name("Anna Karenina").authorName("Leo Tolstoy").availability(BookAvailability.AVAILABLE).build();
-        Book b8 = Book.builder().name("The Death of Ivan Ilyich").authorName("Leo Tolstoy").availability(BookAvailability.AVAILABLE).build();
-        Book b9 = Book.builder().name("Resurrection").authorName("Leo Tolstoy").availability(BookAvailability.AVAILABLE).build();
-        libraryService.saveBook(b2);libraryService.saveBook(b3);libraryService.saveBook(b4);libraryService.saveBook(b5);libraryService.saveBook(b6);
-        libraryService.saveBook(b7);libraryService.saveBook(b8);libraryService.saveBook(b9);
+//       Book b3 = Book.builder().name("Poor Folk").authorName("Fyodor Mikhailovich Dostoevsky").availability(BookAvailability.AVAILABLE).build();
+//        Book b2 = Book.builder().name("Notes from Underground").authorName("Fyodor Mikhailovich Dostoevsky").availability(BookAvailability.AVAILABLE).build();
+//        Book b4 = Book.builder().name("The Idiot").authorName("Fyodor Mikhailovich Dostoevsky").availability(BookAvailability.AVAILABLE).build();
+//        Book b5 = Book.builder().name("Crime and Punishment").authorName("Fyodor Mikhailovich Dostoevsky").availability(BookAvailability.AVAILABLE).build();
+//        Book b6 = Book.builder().name("War and Peace").authorName("Leo Tolstoy").availability(BookAvailability.AVAILABLE).build();
+//        Book b7 = Book.builder().name("Anna Karenina").authorName("Leo Tolstoy").availability(BookAvailability.AVAILABLE).build();
+//        Book b8 = Book.builder().name("The Death of Ivan Ilyich").authorName("Leo Tolstoy").availability(BookAvailability.AVAILABLE).build();
+//        Book b9 = Book.builder().name("Resurrection").authorName("Leo Tolstoy").availability(BookAvailability.AVAILABLE).build();
+//        libraryService.saveBook(b2);libraryService.saveBook(b3);libraryService.saveBook(b4);libraryService.saveBook(b5);libraryService.saveBook(b6);
+//        libraryService.saveBook(b7);libraryService.saveBook(b8);libraryService.saveBook(b9);
 
-      */
+
 //        Role member = new Role(("MEMBER"));
 //        Role librarian = new Role("LIBRARIAN");
 //        Member m1 = Member.builder().email("member@gmail.com").firstName("mammad").lastName("hasani").borrowedBooks(Arrays.asList(b1)).gender(Gender.MALE)
