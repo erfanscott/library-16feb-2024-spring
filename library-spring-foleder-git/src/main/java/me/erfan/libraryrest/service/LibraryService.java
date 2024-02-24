@@ -24,6 +24,8 @@ public interface LibraryService {
     /**
      * MemberService
      * */
+    List<Member> findSpecificMembers(Specification<Member> spec, int pageNumber);
+    List<Member> fetchAllMembers(int page);
     List<Member> fetchAllMembers();
     Member fetchMemberById(Long id);
     List<Book> getBorrowedBooks(Long memberId);

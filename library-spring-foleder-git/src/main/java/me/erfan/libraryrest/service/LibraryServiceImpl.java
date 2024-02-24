@@ -125,6 +125,19 @@ public class LibraryServiceImpl implements LibraryService {
     public List<Member> fetchAllMembers() {
        return (List<Member>) memberRepository.findAll();
     }
+
+    @Override
+    public List<Member> fetchAllMembers(int page) {
+        Pageable pageable = PageRequest.of(page,10);
+        Page<Member> results =  memberRepository.findAll(pageable);
+        return results.stream().toList();
+    }
+
+    @Override
+    public List<Member> findSpecificMembers(Specification<Member> spec, int pageNumber) {
+        Page<Member> results = memberRepository.findAll(spec,PageRequest.of(pageNumber,10));
+        return results.stream().toList();
+    }
     @Override
     public Member fetchMemberById(Long id) {
         Optional<Member> result = memberRepository.findById(id);

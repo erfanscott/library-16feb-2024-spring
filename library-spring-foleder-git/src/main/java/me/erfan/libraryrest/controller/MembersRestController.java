@@ -6,11 +6,13 @@ import me.erfan.libraryrest.entity.libraryUser.Authority;
 import me.erfan.libraryrest.entity.libraryUser.LibraryUser;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Member;
 import me.erfan.libraryrest.service.LibraryService;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,6 +66,56 @@ public class MembersRestController {
         System.out.println(memberId+"////i was in put mapping");
             libraryService.updateLibraryUserProfile(Long.valueOf(memberId),updatedFields, Member.class);
             return new ResponseEntity<>("the user has been successfullyy updated",HttpStatus.OK);
+    }
+
+    @PostMapping("/populate")
+    public void addMembers(@RequestBody List<Member> members){
+
+        for (Member member: members
+        ) {
+            libraryService.saveLibraryUser(member, Member.class);
+        }
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+
+    public ResponseEntity<List<Member>> findMembers(@RequestParam String key,@RequestParam String page){
+
+
+        List<Member> results = new ArrayList<>();
+        int pageNumber = Integer.valueOf(page);
+
+        if(key.equals("")){
+            results = libraryService.fetchAllMembers(pageNumber);
+            return new ResponseEntity<List<Member>>(results, HttpStatus.OK);
+        }
+
+
+        Long keyAsId;
+        try {
+            keyAsId = Long.valueOf(key);
+        }catch (Exception e){
+            keyAsId = null;
+        }
+        final Long longKey = keyAsId;
+
+/**
+ * payyyyyyyyyyyyyyyyyy attention to %%%%%%%
+ * */
+        Specification<Member> spec = (root, query, criteriaBuilder) -> {
+            return (criteriaBuilder.or(
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")),"%"+key.toLowerCase()+"%")
+                    ,criteriaBuilder.like(criteriaBuilder.lower(root.get("lastName")),"%"+key.toLowerCase()+"%")
+                    ,criteriaBuilder.like(criteriaBuilder.lower(root.get("email")),"%"+key.toLowerCase()+"%")
+                    ,criteriaBuilder.equal(root.get("id"),longKey)));
+        };
+
+
+
+        results = libraryService.findSpecificMembers(spec,pageNumber);
+
+        return new ResponseEntity<List<Member>>(results, HttpStatus.OK);
     }
 
 }
