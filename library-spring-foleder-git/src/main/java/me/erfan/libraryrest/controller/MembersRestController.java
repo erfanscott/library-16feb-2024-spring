@@ -30,7 +30,7 @@ public class MembersRestController {
         return libraryService.fetchAllMembers();
     }
 
-    @GetMapping("/members/{memberId}")
+    @GetMapping("/{memberId}")
     public Member getMember(@PathVariable String memberId){
         Member requestedMember = libraryService.fetchMemberById(Long.valueOf(memberId));
         return requestedMember;

@@ -35,7 +35,11 @@ public class BookRestController {
         this.libraryService = libraryService;
         this.bookRepository = bookRepository;
     }
-
+    @GetMapping("/{bookId}")
+    public Book getBook(@PathVariable String bookId){
+        Book requestedBook = libraryService.fetchBookById(Long.valueOf(bookId));
+        return requestedBook;
+    }
 
     @PostMapping("/")
     public ResponseEntity<Book> addBook(@RequestBody Book book){
