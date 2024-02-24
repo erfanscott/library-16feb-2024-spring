@@ -67,7 +67,6 @@ public class BookRestController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-
     public ResponseEntity<List<Book>> findBooks(@RequestParam String key,@RequestParam String page){
 
 
@@ -106,4 +105,48 @@ public class BookRestController {
     }
 
 
+
+    @RequestMapping(method = RequestMethod.GET,path = "/borrowed-by")
+    public ResponseEntity<List<Book>> findBorrowedByMemberBooks(@RequestParam String key,@RequestParam String borrowedBy,@RequestParam String page){
+
+        List<Book> results = new ArrayList<>();
+        int pageNumber = Integer.valueOf(page);
+        Long keyAsId;
+        try {
+            keyAsId = Long.valueOf(key);
+        }catch (Exception e){
+            keyAsId = null;
+        }
+        final Long longKey = keyAsId;
+
+        if(key.equals("")){
+//            Specification<Book> spec = (root, query,  criteriaBuilder) -> {
+//                return (criteriaBuilder.or(
+//                        criteriaBuilder.like(criteriaBuilder.lower(root.get("name")),"%"+key.toLowerCase()+"%")
+//                        ,criteriaBuilder.like(criteriaBuilder.lower(root.get("authorName")),"%"+key.toLowerCase()+"%")
+//                        ,criteriaBuilder.equal(root.get("borrowedBy"),libraryService.fetchMemberById(Long.valueOf(borrowedBy)))
+//                        ,criteriaBuilder.equal(root.get("id"),longKey)));
+//            };
+//            results = libraryService.fetchAllBooks(pageNumber);
+//            return new ResponseEntity<List<Book>>(results, HttpStatus.OK);
+        }
+
+/**
+ * payyyyyyyyyyyyyyyyyy attention to %%%%%%%
+ * */
+        Specification<Book> memberspec = (root, query,  criteriaBuilder) -> {
+            return (criteriaBuilder.equal(root.get("borrowedBy"),libraryService.fetchMemberById(Long.valueOf(borrowedBy))));
+        };
+        Specification<Book> bookSpec = (root, query,  criteriaBuilder) -> {
+            return (criteriaBuilder.or(
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("name")),"%"+key.toLowerCase()+"%")
+                    ,criteriaBuilder.like(criteriaBuilder.lower(root.get("authorName")),"%"+key.toLowerCase()+"%")
+                    ,criteriaBuilder.equal(root.get("id"),longKey)));
+        };
+        Specification<Book> spec = Specification.where(memberspec).and(bookSpec);
+
+        results = libraryService.findSpecificBooks(spec,pageNumber);
+
+        return new ResponseEntity<List<Book>>(results, HttpStatus.OK);
+    }
 }

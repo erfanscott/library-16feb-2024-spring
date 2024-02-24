@@ -3,6 +3,7 @@ package me.erfan.libraryrest.service;
 import me.erfan.libraryrest.controlleradvice.UpdateUserFailedException;
 import me.erfan.libraryrest.dto.LibraryUserDTO;
 import me.erfan.libraryrest.entity.Book;
+import me.erfan.libraryrest.entity.enums.BookAvailability;
 import me.erfan.libraryrest.entity.libraryUser.Authority;
 import me.erfan.libraryrest.entity.libraryUser.Authority;
 import me.erfan.libraryrest.entity.libraryUser.LibraryUser;
@@ -170,6 +171,7 @@ public class LibraryServiceImpl implements LibraryService {
         Book book = fetchBookById(bookId);
         member.addBorrowedBook(book);
         book.setBorrowedBy(member);
+        book.setAvailability(BookAvailability.BORROWED);
         book.setBorrowingDate(LocalDate.now());
         saveLibraryUser(member,Member.class);
     }
@@ -180,6 +182,7 @@ public class LibraryServiceImpl implements LibraryService {
         Book book = fetchBookById(bookId);
         member.removeBorrowedBook(book);
         book.setBorrowedBy(null);
+        book.setAvailability(BookAvailability.AVAILABLE);
         book.setBorrowingDate(null);
         saveLibraryUser(member,Member.class);
         saveBook(book);
