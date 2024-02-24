@@ -28,6 +28,7 @@ public interface LibraryService {
     List<Member> fetchAllMembers(int page);
     List<Member> fetchAllMembers();
     Member fetchMemberById(Long id);
+    void deleteMember(Long id);
     List<Book> getBorrowedBooks(Long memberId);
     void borrowBook(Long memberId, Long bookId);
     void returnBook(Long memberId, Long bookId);
@@ -40,5 +41,5 @@ public interface LibraryService {
     List<Book> findSpecificBooks(Specification<Book> spec, int pageNumber);
 
 
-
+    void deleteBook(Long id);
 }

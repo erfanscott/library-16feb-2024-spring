@@ -149,6 +149,16 @@ public class LibraryServiceImpl implements LibraryService {
         throw new RuntimeException();
     }
     @Override
+    public void deleteMember(Long id){
+        Member member = fetchMemberById(id);
+        List<Book>  borrowedBooks = member.getBorrowedBooks();
+        for(Book book : borrowedBooks){
+            book.setBorrowedBy(null);
+            saveBook(book);
+        }
+        memberRepository.deleteById(id);
+    }
+    @Override
     public List<Book> getBorrowedBooks(Long memberId) {
       Member member = fetchMemberById(memberId);
       List<Book> borrowedBooks = member.getBorrowedBooks();
@@ -203,6 +213,14 @@ public class LibraryServiceImpl implements LibraryService {
     public List<Book> findSpecificBooks(Specification<Book> spec, int pageNumber) {
         Page<Book> results = bookRepository.findAll(spec,PageRequest.of(pageNumber,10));
         return results.stream().toList();
+    }
+
+    @Override
+    public void deleteBook(Long id) {
+       // Member member = book.getBorrowedBy();
+        bookRepository.deleteById(id);
+      //
+
     }
 
 

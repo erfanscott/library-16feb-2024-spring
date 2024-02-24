@@ -77,6 +77,11 @@ public class MembersRestController {
         }
 
     }
+    @DeleteMapping("/{memberId}")
+    public String deleteBook(@PathVariable String memberId){
+        libraryService.deleteMember(Long.valueOf(memberId));
+        return "Successfully deleted";
+    }
 
     @RequestMapping(method = RequestMethod.GET)
 

@@ -4,6 +4,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.validation.constraints.NotNull;
 import me.erfan.libraryrest.entity.Book;
 import me.erfan.libraryrest.entity.enums.BookAvailability;
 import me.erfan.libraryrest.entity.libraryUser.libraryusertypes.Member;
@@ -53,6 +54,12 @@ public class BookRestController {
 
     }
 
+    @DeleteMapping("/{bookId}")
+    public String deleteBook(@PathVariable(required = false) String bookId){
+
+        libraryService.deleteBook(Long.valueOf(bookId));
+        return "successfully deleted";
+    }
 
 
     @RequestMapping(method = RequestMethod.GET)
